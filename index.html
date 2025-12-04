@@ -10,7 +10,7 @@
     --card:#ffffff;
     --muted:#6b7280;
     --green:#2ea44f;
-    --maxw:820px;
+    --maxw:920px;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -22,185 +22,78 @@
     -webkit-font-smoothing:antialiased;
     padding-top: env(safe-area-inset-top);
   }
+  .container{max-width:var(--maxw);margin:0 auto;padding:18px}
 
-  .container{
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:18px;
-  }
+  /* header */
+  .header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img.logo{width:46px;height:46px;border-radius:8px;object-fit:cover;display:block;background:#fff;border:1px solid rgba(0,0,0,0.04);box-shadow:0 6px 18px rgba(11,22,37,0.06)}
+  .brand .title{font-weight:700;font-size:15px}
+  .brand .subtitle{font-size:12px;color:var(--muted);margin-top:2px}
 
-  /* HEADER */
-  .header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:14px;
-  }
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  .brand img.logo{
-    width:46px;
-    height:46px;
-    object-fit:cover;
-    border-radius:8px;
-    display:block;
-    flex-shrink:0;
-    background:#fff;
-    border:1px solid rgba(0,0,0,0.04);
-    box-shadow:0 6px 18px rgba(11,22,37,0.06);
-  }
-  .brand .texts{
-    display:flex;
-    flex-direction:column;
-    line-height:1;
-  }
-  .brand .title{
-    font-weight:700;
-    font-size:15px;
-    color:#0f1724;
-  }
-  .brand .subtitle{
-    font-size:12px;
-    color:var(--muted);
-    margin-top:2px;
-  }
-
-  .burger{
-    width:44px;height:44px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;
-    box-shadow:0 6px 18px rgba(11,22,37,0.06); flex-shrink:0;
-  }
+  .burger{width:44px;height:44px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(11,22,37,0.06)}
   .burger .lines{width:20px;height:14px;position:relative}
   .burger .lines span{position:absolute;left:0;right:0;height:2px;background:#333;border-radius:2px}
   .burger .lines span:nth-child(1){top:0}
   .burger .lines span:nth-child(2){top:6px}
   .burger .lines span:nth-child(3){top:12px}
 
-  /* CARD area */
-  .card{
-    background:var(--card);
-    border-radius:14px;
-    padding:18px;
-    box-shadow:0 10px 40px rgba(11,22,37,0.06);
-    border:1px solid rgba(0,0,0,0.03);
-  }
+  /* card */
+  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 10px 40px rgba(11,22,37,0.06);border:1px solid rgba(0,0,0,0.03)}
+  .alert{background:#fff7e6;border:1px solid #ffe8b5;padding:12px;border-radius:8px;color:#6b4b00;margin-bottom:12px;font-size:13px}
 
-  .alert{
-    background:#fff7e6;
-    border:1px solid #ffe8b5;
-    padding:12px;border-radius:8px;color:#6b4b00;margin-bottom:12px;font-size:13px;
-  }
-
-  .pin-block{margin-top:4px}
   .pin-row{display:flex;gap:10px;align-items:center}
-  .pin-input{
-    flex:1;background:#fff;border:1px solid #e6e6e6;padding:12px 14px;border-radius:8px;font-size:15px;
-  }
-  .open-btn{
-    display:block;width:100%;margin-top:10px;background:var(--green);color:#fff;border:0;padding:12px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;
-    box-shadow:0 8px 20px rgba(46,164,79,0.16);
-  }
+  .pin-input{flex:1;background:#fff;border:1px solid #e6e6e6;padding:12px 14px;border-radius:8px;font-size:15px}
+  .open-btn{display:block;width:100%;margin-top:10px;background:var(--green);color:#fff;border:0;padding:12px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 8px 20px rgba(46,164,79,0.16)}
   .hint{font-size:13px;color:var(--muted);margin-top:10px}
+  #error{color:#c92a2a;margin-top:8px;font-size:13px}
 
-  /* DOCUMENT PREVIEW */
-  .doc-wrap{
-    margin-top:20px;
-    display:flex;
-    justify-content:center;
-  }
+  /* preview area (either image or inline PDF viewer) */
+  .preview-wrap{margin-top:20px;display:flex;justify-content:center}
+  .preview-card{width:100%;max-width:980px;background:#fff;border-radius:10px;padding:16px;box-shadow:0 18px 40px rgba(11,22,37,0.08);border:1px solid rgba(0,0,0,0.04)}
+  .paper{background:linear-gradient(180deg,#ffffff 0,#f8fafc 100%);padding:12px;border-radius:6px;border:1px solid rgba(0,0,0,0.03)}
+  .doc-placeholder img{display:block;width:100%;height:auto;border-radius:6px;max-width:420px;margin:0 auto;object-fit:cover}
+  .pdf-frame{width:100%;height:70vh;border:0;border-radius:6px}
 
-  .doc-card{
-    width:100%;
-    max-width:420px;
-    background:#fff;
-    border-radius:10px;
-    padding:18px;
-    box-shadow:0 18px 40px rgba(11,22,37,0.08);
-    border:1px solid rgba(0,0,0,0.04);
-    display:flex;
-    justify-content:center;
-  }
-
-  .doc-card-inner{
-    width:100%;
-    max-width:360px;
-  }
-
-  .document-image{
-    display:block;
-    width:100%;
-    height:auto;
-    border-radius:6px;
-    object-fit:cover;
-    -webkit-user-select:none;
-    user-select:none;
-  }
-
-  .paper{
-    background:linear-gradient(180deg,#ffffff 0,#f8fafc 100%);
-    padding:12px;
-    border-radius:6px;
-    border:1px solid rgba(0,0,0,0.03);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
-  }
-
-  /* responsive adjustments */
-  @media (max-width:520px){
-    .container{padding:14px}
-    .brand .title{font-size:14px}
-    .doc-card{max-width:92vw}
-    .doc-card-inner{max-width:88vw}
-    .pin-input{font-size:15px;padding:11px}
-  }
-
-  @media (min-width:900px){
-    .doc-card{max-width:540px}
-    .doc-card-inner{max-width:480px}
+  @media (max-width:720px){
+    .paper{padding:10px}
+    .pdf-frame{height:60vh}
   }
 </style>
 </head>
 <body>
   <div class="container">
-    <!-- HEADER -->
     <header class="header" role="banner">
-      <div class="brand" role="img" aria-label="repository logo">
-        <!-- Put your logo at assets/logo.png -->
-        <img src="assets/logo.png" alt="logo" class="logo" id="siteLogo">
-        <div class="texts">
+      <div class="brand">
+        <img id="siteLogo" class="logo" src="assets/logo.png" alt="logo">
+        <div>
           <div class="title">repository.gov.uz</div>
           <div class="subtitle">Elektron hujjat</div>
         </div>
       </div>
-
-      <button class="burger" aria-label="menu">
-        <div class="lines"><span></span><span></span><span></span></div>
-      </button>
+      <div class="burger" aria-hidden="true" title="menu"><div class="lines"><span></span><span></span><span></span></div></div>
     </header>
 
-    <!-- MAIN CARD -->
     <main class="card" role="main">
-      <div class="alert">
-        Пожалуйста пройдите авторизацию чтобы система определила вас. Если документ принадлежит вам, введения ПИН кода не требуется.
-      </div>
+      <div class="alert">Пожалуйста пройдите авторизацию чтобы система определила вас. Если документ принадлежит вам, введения ПИН кода не требуется.</div>
 
-      <div class="pin-block">
+      <div>
         <div class="pin-row">
-          <input id="pin" class="pin-input" type="text" inputmode="numeric">
+          <input id="pin" class="pin-input" type="text" inputmode="numeric" placeholder="PDFdagi PINni kiriting (masalan 9876)">
         </div>
         <button id="openBtn" class="open-btn">Открыть</button>
         <div class="hint">PIN-kod размещается рядом с QR-кодом документа</div>
-        <div id="error" style="color:#c92a2a;margin-top:8px;font-size:13px"></div>
+        <div id="error" role="alert"></div>
       </div>
 
-      <!-- Document preview -->
-      <div class="doc-wrap">
-        <div class="doc-card" role="group" aria-label="Document preview">
-          <div class="doc-card-inner paper">
-            <!-- Put your document image in assets/hujjat.jpg -->
-            <img src="assets/hujjat.jpg" alt="Hujjat" class="document-image" id="documentImage">
+      <div class="preview-wrap">
+        <div class="preview-card">
+          <div class="paper" id="previewPane">
+            <!-- Default: placeholder image showing where PIN is on paper -->
+            <div class="doc-placeholder" id="docPlaceholder">
+              <img src="assets/hujjat.jpg" alt="Document preview">
+            </div>
+            <!-- When PIN correct, we'll replace docPlaceholder with an iframe for inline PDF -->
           </div>
         </div>
       </div>
@@ -209,64 +102,69 @@
 
 <script>
 (function(){
-  // --- CONFIG: o'zgartiring kerak bo'lsa ---
-  // PDF: agar Google Drive ishlatilsa, faylni "Anyone with link" qilib public qiling.
-  // DRIVE FILE ID (siz bergan): 1lH2AahKJVvwnhzlGg3gGmGFvjKaEdQdS
-  const PDF_URL_DRIVE = "https://drive.google.com/uc?export=view&id=1lH2AahKJVvwnhzlGg3gGmGFvjKaEdQdS";
-  // yoki o'zingiz host qilgan to'g'ridan-to'g'ri PDF URL: "/assets/document.pdf"
-  const PDF_URL = PDF_URL_DRIVE;
+  // ---------------- CONFIG ----------------
+  // Best option: host the PDF in your site assets:
+  const PDF_URL = "/assets/document.pdf";   // <-- put document.pdf in assets/
+  // Alternative: public S3/Cloud URL (example):
+  // const PDF_URL = "https://your-bucket.s3.amazonaws.com/document.pdf";
 
-  // STORED_PINni shu yerda o'zgartiring (misol: "9876")
+  // Stored PIN (set to the actual pin)
   const STORED_PIN = "9876";
+  // Accept user typing either the PIN or its reverse (keeps backward compatibility)
+  // ------------- end config ----------------
 
-  // logo va hujjat tasvir yo'llari (relative)
-  const LOGO_URL = "assets/logo.png";
-  const DOC_IMG  = "assets/hujjat.jpg";
-
-  // --- end config ---
-
-  // inject resources
-  const logoEl = document.getElementById('siteLogo');
-  if (logoEl && LOGO_URL) logoEl.src = LOGO_URL;
-
-  const docEl = document.getElementById('documentImage');
-  if (docEl && DOC_IMG) docEl.src = DOC_IMG;
-
-  // helper
-  function reverseString(s){ return s.split('').reverse().join(''); }
-
-  // elements
   const pinInput = document.getElementById('pin');
   const openBtn = document.getElementById('openBtn');
   const errorEl = document.getElementById('error');
+  const previewPane = document.getElementById('previewPane');
+  const docPlaceholder = document.getElementById('docPlaceholder');
+
+  function reverseString(s){ return s.split('').reverse().join(''); }
+
+  function showInlinePDF(url){
+    // Remove placeholder if present
+    if (docPlaceholder) docPlaceholder.remove();
+    // If already an iframe, replace src
+    let existing = document.getElementById('pdfViewer');
+    if (!existing){
+      const iframe = document.createElement('iframe');
+      iframe.id = 'pdfViewer';
+      iframe.className = 'pdf-frame';
+      iframe.src = url;
+      iframe.title = 'Document viewer';
+      previewPane.appendChild(iframe);
+    } else {
+      existing.src = url;
+    }
+  }
+
+  function openInNewTab(url){
+    try {
+      const w = window.open(url, '_blank');
+      if (!w) window.location.href = url; // fallback if popup blocked
+    } catch(e){
+      window.location.href = url;
+    }
+  }
 
   openBtn.addEventListener('click', function(){
     errorEl.textContent = '';
     const v = (pinInput.value || '').trim();
-
     if (!v) {
       errorEl.textContent = 'Iltimos PDFdagi PINni kiriting.';
       return;
     }
 
-    // qabul qilamiz: foydalanuvchi oddiy yoki ters PIN kiritsa ham
     if (v === STORED_PIN || reverseString(v) === STORED_PIN) {
-      // open PDF: avval popupga harakat qilib ko'ramiz, agar bloklansa - shu oynada ochish
-      try {
-        const newWin = window.open(PDF_URL, '_blank');
-        if (!newWin) {
-          // popup blocked -> ochamiz shu oynada
-          window.location.href = PDF_URL;
-        }
-      } catch (e) {
-        window.location.href = PDF_URL;
-      }
+      // Prefer inline viewer:
+      // 1) If PDF_URL is same-origin and reachable (i.e. deployed with site assets) iframe will load inline.
+      // 2) If hosting doesn't allow inline display, openInNewTab will fallback.
+      showInlinePDF(PDF_URL);
     } else {
       errorEl.textContent = "PIN noto‘g‘ri. Iltimos PDFdagi PINni tersa kiriting.";
     }
   });
 
-  // Enter tugmasi bilan ham ishlash
   pinInput.addEventListener('keydown', function(e){
     if (e.key === 'Enter') openBtn.click();
   });
