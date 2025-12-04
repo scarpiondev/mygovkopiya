@@ -20,7 +20,7 @@
     background:var(--bg);
     color:#222;
     -webkit-font-smoothing:antialiased;
-    padding-top: env(safe-area-inset-top); /* iPhone notch */
+    padding-top: env(safe-area-inset-top);
   }
 
   .container{
@@ -105,7 +105,7 @@
   }
   .hint{font-size:13px;color:var(--muted);margin-top:10px}
 
-  /* DOCUMENT PREVIEW (match reference style) */
+  /* DOCUMENT PREVIEW */
   .doc-wrap{
     margin-top:20px;
     display:flex;
@@ -114,7 +114,7 @@
 
   .doc-card{
     width:100%;
-    max-width:420px;        /* reference size on mobile */
+    max-width:420px;
     background:#fff;
     border-radius:10px;
     padding:18px;
@@ -126,7 +126,7 @@
 
   .doc-card-inner{
     width:100%;
-    max-width:360px;    /* inner paper */
+    max-width:360px;
   }
 
   .document-image{
@@ -139,7 +139,6 @@
     user-select:none;
   }
 
-  /* make the image look like paper with small space and QR area visible */
   .paper{
     background:linear-gradient(180deg,#ffffff 0,#f8fafc 100%);
     padding:12px;
@@ -168,7 +167,7 @@
     <!-- HEADER -->
     <header class="header" role="banner">
       <div class="brand" role="img" aria-label="repository logo">
-        <!-- SET CORRECT PATH to your logo file -->
+        <!-- Put your logo at assets/logo.png -->
         <img src="assets/logo.png" alt="logo" class="logo" id="siteLogo">
         <div class="texts">
           <div class="title">repository.gov.uz</div>
@@ -189,18 +188,18 @@
 
       <div class="pin-block">
         <div class="pin-row">
-          <input id="pin" class="pin-input" type="text" inputmode="numeric" placeholder="Введите PIN-код (например 1234 -> 4321)">
+          <input id="pin" class="pin-input" type="text" inputmode="numeric">
         </div>
         <button id="openBtn" class="open-btn">Открыть</button>
-        <div class="hint">PIN-кod размещается рядом с QR-кодом документа</div>
+        <div class="hint">PIN-kod размещается рядом с QR-кодом документа</div>
         <div id="error" style="color:#c92a2a;margin-top:8px;font-size:13px"></div>
       </div>
 
-      <!-- Document preview centered like your reference -->
+      <!-- Document preview -->
       <div class="doc-wrap">
         <div class="doc-card" role="group" aria-label="Document preview">
           <div class="doc-card-inner paper">
-            <!-- Put your document image here (relative path). Example: assets/hujjat.jpg -->
+            <!-- Put your document image in assets/hujjat.jpg -->
             <img src="assets/hujjat.jpg" alt="Hujjat" class="document-image" id="documentImage">
           </div>
         </div>
@@ -210,38 +209,64 @@
 
 <script>
 (function(){
-  // CONFIG - set these to your actual files
-  const LOGO_URL = "assets/logo.png";   // <-- ensure this file exists in repo with same case
-  const DOC_IMG  = "assets/hujjat.jpg"; // <-- ensure this file exists
-  const PDF_URL  = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+  // --- CONFIG: o'zgartiring kerak bo'lsa ---
+  // PDF: agar Google Drive ishlatilsa, faylni "Anyone with link" qilib public qiling.
+  // DRIVE FILE ID (siz bergan): 1lH2AahKJVvwnhzlGg3gGmGFvjKaEdQdS
+  const PDF_URL_DRIVE = "https://drive.google.com/uc?export=view&id=1lH2AahKJVvwnhzlGg3gGmGFvjKaEdQdS";
+  // yoki o'zingiz host qilgan to'g'ridan-to'g'ri PDF URL: "/assets/document.pdf"
+  const PDF_URL = PDF_URL_DRIVE;
+
+  // STORED_PINni shu yerda o'zgartiring (misol: "9876")
   const STORED_PIN = "9876";
 
-  // inject resources (only if present)
+  // logo va hujjat tasvir yo'llari (relative)
+  const LOGO_URL = "assets/logo.png";
+  const DOC_IMG  = "assets/hujjat.jpg";
+
+  // --- end config ---
+
+  // inject resources
   const logoEl = document.getElementById('siteLogo');
-  if (LOGO_URL) logoEl.src = LOGO_URL;
+  if (logoEl && LOGO_URL) logoEl.src = LOGO_URL;
 
   const docEl = document.getElementById('documentImage');
-  if (DOC_IMG) docEl.src = DOC_IMG;
+  if (docEl && DOC_IMG) docEl.src = DOC_IMG;
 
-  // PIN logic
+  // helper
+  function reverseString(s){ return s.split('').reverse().join(''); }
+
+  // elements
   const pinInput = document.getElementById('pin');
   const openBtn = document.getElementById('openBtn');
   const errorEl = document.getElementById('error');
 
-  function reverseString(s){ return s.split('').reverse().join(''); }
-
   openBtn.addEventListener('click', function(){
     errorEl.textContent = '';
     const v = (pinInput.value || '').trim();
-    if (!v) { errorEl.textContent = 'Iltimos PDFdagi PINni kiriting.'; return; }
-    if (!STORED_PIN) { errorEl.textContent = "STORED_PIN noto'g'ri o'rnatilgan."; return; }
-    if (reverseString(v) === STORED_PIN) {
-      window.open(PDF_URL, '_blank');
+
+    if (!v) {
+      errorEl.textContent = 'Iltimos PDFdagi PINni kiriting.';
+      return;
+    }
+
+    // qabul qilamiz: foydalanuvchi oddiy yoki ters PIN kiritsa ham
+    if (v === STORED_PIN || reverseString(v) === STORED_PIN) {
+      // open PDF: avval popupga harakat qilib ko'ramiz, agar bloklansa - shu oynada ochish
+      try {
+        const newWin = window.open(PDF_URL, '_blank');
+        if (!newWin) {
+          // popup blocked -> ochamiz shu oynada
+          window.location.href = PDF_URL;
+        }
+      } catch (e) {
+        window.location.href = PDF_URL;
+      }
     } else {
       errorEl.textContent = "PIN noto‘g‘ri. Iltimos PDFdagi PINni tersa kiriting.";
     }
   });
 
+  // Enter tugmasi bilan ham ishlash
   pinInput.addEventListener('keydown', function(e){
     if (e.key === 'Enter') openBtn.click();
   });
