@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Hujjat - Kirish</title>
+<style>
+  :root{
+    --bg:#f5f7f8;
+    --card:#fff;
+    --muted:#6b7280;
+    --green:#1e8e3e;
+    --warning-bg:#fff3cd;
+    --warning-border:#ffeeba;
+    --radius:10px;
+    --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial, Helvetica, sans-serif;background:var(--bg);color:#222}
+  .container{max-width:var(--maxw);margin:14px auto;padding:12px}
+
+  /* header (logo va burger o'xshash) */
+  .header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img.logo{width:44px;height:44px;object-fit:cover;border-radius:8px;display:block}
+  .brand .title{font-weight:700;font-size:15px;line-height:1}
+  .brand .subtitle{font-size:12px;color:var(--muted);margin-top:2px}
+  .burger{width:44px;height:44px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(11,22,37,0.06)}
+  .burger .lines{width:20px;height:14px;position:relative}
+  .burger .lines span{position:absolute;left:0;right:0;height:2px;background:#333;border-radius:2px}
+  .burger .lines span:nth-child(1){top:0}
+  .burger .lines span:nth-child(2){top:6px}
+  .burger .lines span:nth-child(3){top:12px}
+
+  /* main card */
+  .card{background:var(--card);border-radius:12px;padding:14px 16px 18px;box-shadow:0 8px 30px rgba(11,22,37,0.06);border:1px solid rgba(0,0,0,0.03)}
+  .alert{background:var(--warning-bg);border:1px solid var(--warning-border);padding:12px;border-radius:8px;color:#6b4b00;margin-bottom:12px;font-size:13px}
+  h1{margin:6px 0 8px;font-size:18px}
+  p.lead{margin:0 0 12px;color:var(--muted);font-size:14px}
+
+  /* design preview square like your sample */
+  .preview-wrap{background:#fafafa;border-radius:8px;padding:14px;border:1px solid #eee;display:flex;justify-content:center;align-items:center}
+  .preview{width:100%;max-width:620px;background:#fff;border-radius:8px;padding:18px;border:1px solid #f0f0f0;box-shadow:inset 0 1px 0 rgba(0,0,0,0.02);}
+  .preview img{display:block;width:100%;height:auto;border-radius:6px}
+
+  /* input + large button group styled like repository.gov.uz */
+  .pin-block{margin-top:14px}
+  .pin-row{display:flex;gap:10px;align-items:center}
+  .pin-input{
+    flex:1;background:#fff;border:1px solid #e6e6e6;padding:12px 14px;border-radius:6px;font-size:15px;
+  }
+  .open-btn{
+    display:block;width:100%;margin-top:10px;background:var(--green);color:#fff;border:0;padding:12px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;
+    box-shadow:0 6px 12px rgba(30,142,62,0.14);
+  }
+
+  .hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+  /* bottom doc card */
+  .doc-row{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-top:18px;
+    justify-content:center;   /* -> markazga tekislash uchun */
+    flex-direction:row;
+  }
+
+  /* Hujjat rasmiga responsiv qoidalar:
+     - Desktop: kengligi 60% lekin maximum 360px
+     - Tablet/phone: kengligi 90% lekin maximum 320px
+     - Har doim markazda bo'ladi */
+  .doc-row img{
+    display:block;
+    width:60%;
+    max-width:360px;
+    height:auto;
+    border-radius:8px;
+    border:1px solid #eee;
+    box-shadow:0 6px 18px rgba(11,22,37,0.04);
+    margin:0 auto;
+    object-fit:cover;
+  }
+
+  .thumb{width:110px;height:140px;border-radius:8px;border:1px solid #eee;background:linear-gradient(#fff,#fafafa);padding:8px;display:flex;flex-direction:column;justify-content:space-between}
+  .qr-sample{width:46px;height:46px;background:#eee;border:1px solid #ddd;border-radius:6px;display:block}
+  .pin-badge{background:#fff;border:1px solid #eee;padding:6px;border-radius:6px;font-weight:700;font-size:12px}
+  .doc-info p{margin:0;color:var(--muted);font-size:13px}
+
+  .error{color:#c92a2a;margin-top:10px;font-size:13px}
+
+  /* responsive: mobil uchun */
+  @media (max-width:520px){
+    .container{padding:8px}
+    .preview{padding:12px}
+    .doc-row{flex-direction:column;align-items:center}
+    .thumb{width:160px;height:200px}
+    .doc-row img{
+      width:90%;
+      max-width:320px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <div class="header" role="banner">
+      <div class="brand" role="img" aria-label="repository logo">
+        <!-- O'zingizning logoni shu yerga qo'ying -->
+        <img src="REPLACE_LOGO_URL" alt="logo" class="logo">
+        <div>
+          <div class="title">repository.gov.uz</div>
+          <div class="subtitle">Elektron hujjat</div>
+        </div>
+      </div>
+
+      <div class="burger" aria-hidden="true" title="menu">
+        <div class="lines"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <!-- MAIN CARD -->
+    <div class="card" role="main">
+      <div class="alert">
+        Пожалуйста пройдите авторизацию чтобы система определила вас. Если документ принадлежит вам, введения ПИН кода не требуется. <a href="#" style="color:#0a58ca;text-decoration:underline">Авторизация</a>
+      </div>
+
+      <!-- PIN INPUT va KATTA OCHISH TUGMASI (butun qatorda) -->
+      <div class="pin-block">
+        <h5 style="margin-bottom: 10px;">ПИН код</h5>
+        <div class="pin-row">
+          
+          <input id="pin" class="pin-input" type="text" inputmode="numeric" style="margin-bottom: 5px;">
+        </div>
+        <!-- Katta butun qatordagi tugma (repository sayt ko'rinishiga o'xshash) -->
+        <button id="openBtn" class="open-btn">Открыть</button>
+
+        <div class="hint" style="color: #357ce6;">PIN-kod размещается рядом с QR-кодом документа</div>
+        <div id="error" class="error" role="alert" aria-live="assertive"></div>
+      </div>
+
+      <!-- DOC thumbnail (Hujjat rasmini shu erga joylashtiring) -->
+      <div class="doc-row" style="display: flex; gap: 12px; align-items: center; margin-top: 18px;">
+        <!-- O'zingiz yuklaydigan rasmni shu src ga qo'ying, masalan: /assets/hujjat.jpg -->
+        <img src="/hujjat.jpg" alt="Hujjat" id="documentImage">
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  // ====== O'ZGARTIRING ======
+  const LOGO_URL   = "../logo.png";
+  const DESIGN_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Example.jpg/640px-Example.jpg";
+  const PDF_URL    = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+  const STORED_PIN = "9876";
+  // ========================
+
+  // logo inject
+  const logoEl = document.querySelector('.brand img.logo');
+  if (LOGO_URL && LOGO_URL !== 'REPLACE_LOGO_URL') logoEl.src = LOGO_URL;
+
+  // pin sample badge (agar kerak bo'lsa)
+  const pinSample = document.getElementById('pinSample');
+  if (pinSample && (STORED_PIN && STORED_PIN !== 'REPLACE_PIN')) pinSample.textContent = STORED_PIN.slice(0,4);
+
+  // pin check logic
+  const pinInput = document.getElementById('pin');
+  const openBtn = document.getElementById('openBtn');
+  const errorEl = document.getElementById('error');
+
+  function reverseString(s){ return s.split('').reverse().join(''); }
+
+  openBtn.addEventListener('click', function(){
+    errorEl.textContent = '';
+    const v = (pinInput.value || '').trim();
+    if (!v) { errorEl.textContent = 'Iltimos PDFdagi PINni kiriting.'; return; }
+    if (!STORED_PIN || STORED_PIN === 'REPLACE_PIN') {
+      errorEl.textContent = "STORED_PIN noto'g'ri o'rnatilgan. Kodni sozlang.";
+      return;
+    }
+    if (reverseString(v) === STORED_PIN) {
+      window.open(PDF_URL, '_blank');
+    } else {
+      errorEl.textContent = "PIN noto‘g‘ri. Iltimos PDFdagi PINni tersa kiriting.";
+    }
+  });
+
+  pinInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') openBtn.click();
+  });
+})();
+</script>
+</body>
+</html>
