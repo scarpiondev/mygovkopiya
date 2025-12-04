@@ -22,36 +22,137 @@
     -webkit-font-smoothing:antialiased;
     padding-top: env(safe-area-inset-top);
   }
+
   .container{max-width:var(--maxw);margin:0 auto;padding:18px}
-  .header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-  .brand{display:flex;align-items:center;gap:12px}
-  .brand img.logo{width:46px;height:46px;border-radius:8px;object-fit:cover;display:block;background:#fff;border:1px solid rgba(0,0,0,0.04);box-shadow:0 6px 18px rgba(11,22,37,0.06)}
-  .brand .title{font-weight:700;font-size:15px}
-  .brand .subtitle{font-size:12px;color:var(--muted);margin-top:2px}
-  .burger{width:44px;height:44px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(11,22,37,0.06)}
+
+  /* HEADER: relative so burger can be absolute (never disappears) */
+  .header{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:12px;
+    margin-bottom:14px;
+    padding-right:72px; /* reserve space for absolute burger */
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  /* logo: provide min sizes so layout doesn't collapse if image missing */
+  .brand img.logo{
+    width:46px;
+    height:46px;
+    border-radius:8px;
+    object-fit:cover;
+    display:block;
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.04);
+    box-shadow:0 6px 18px rgba(11,22,37,0.06);
+    min-width:46px;
+    min-height:46px;
+  }
+
+  .brand .title{
+    font-weight:700;
+    font-size:15px;
+    color:#0f1724;
+  }
+  .brand .subtitle{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:2px;
+  }
+
+  /* BURGER: absolute to the right, always visible with 3 lines */
+  .burger{
+    position:absolute;
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
+    width:44px;
+    height:44px;
+    border-radius:10px;
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.06);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 18px rgba(11,22,37,0.06);
+    z-index:20;
+    cursor:pointer;
+  }
+  .burger:active { transform:translateY(-50%) scale(0.98); }
+
   .burger .lines{width:20px;height:14px;position:relative}
-  .burger .lines span{position:absolute;left:0;right:0;height:2px;background:#333;border-radius:2px}
-  .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 10px 40px rgba(11,22,37,0.06);border:1px solid rgba(0,0,0,0.03)}
-  .alert{background:#fff7e6;border:1px solid #ffe8b5;padding:12px;border-radius:8px;color:#6b4b00;margin-bottom:12px;font-size:13px}
+  .burger .lines span{
+    position:absolute;
+    left:0; right:0;
+    height:2px;
+    background:#111;
+    border-radius:2px;
+    display:block;
+  }
+  .burger .lines span:nth-child(1){ top:0; }
+  .burger .lines span:nth-child(2){ top:6px; }
+  .burger .lines span:nth-child(3){ top:12px; }
+
+  /* CARD */
+  .card{
+    background:var(--card);
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 10px 40px rgba(11,22,37,0.06);
+    border:1px solid rgba(0,0,0,0.03);
+  }
+
+  .alert{
+    background:#fff7e6;
+    border:1px solid #ffe8b5;
+    padding:12px;border-radius:8px;color:#6b4b00;margin-bottom:12px;font-size:13px;
+  }
+
   .pin-row{display:flex;gap:10px;align-items:center}
-  .pin-input{flex:1;background:#fff;border:1px solid #e6e6e6;padding:12px 14px;border-radius:8px;font-size:15px}
-  .open-btn{display:block;width:100%;margin-top:10px;background:var(--green);color:#fff;border:0;padding:12px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 8px 20px rgba(46,164,79,0.16)}
-  .hint{font-size:13px;color:var(--muted);margin-top:10px}
+  .pin-input{
+    flex:1;background:#fff;border:1px solid #e6e6e6;padding:12px 14px;border-radius:8px;font-size:15px;
+  }
+
+  .open-btn{
+    display:block;width:100%;margin-top:10px;background:var(--green);color:#fff;border:0;padding:12px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 8px 20px rgba(46,164,79,0.16)
+  }
+  .hint{font-size:13px;color:blue;margin-top:10px}
   #error{color:#c92a2a;margin-top:8px;font-size:13px}
+
   .preview-wrap{margin-top:20px;display:flex;justify-content:center}
   .preview-card{width:100%;max-width:980px;background:#fff;border-radius:10px;padding:16px;box-shadow:0 18px 40px rgba(11,22,37,0.08);border:1px solid rgba(0,0,0,0.04)}
   .paper{background:linear-gradient(180deg,#ffffff 0,#f8fafc 100%);padding:12px;border-radius:6px;border:1px solid rgba(0,0,0,0.03)}
   .doc-placeholder img{display:block;width:100%;height:auto;border-radius:6px;max-width:420px;margin:0 auto;object-fit:cover}
-  @media (max-width:720px){ .paper{padding:10px} }
+
+  /* responsive */
+  @media (max-width:720px){
+    .paper{padding:10px}
+    .container{padding:14px}
+    .header{padding-right:58px}
+  }
 </style>
 </head>
 <body>
   <div class="container">
     <header class="header" role="banner">
-      <div class="brand">
+      <div class="brand" role="img" aria-label="repository logo">
+        <!-- logo (if missing, box stays) -->
         <img id="siteLogo" class="logo" src="assets/logo.png" alt="logo">
       </div>
-      <div class="burger" aria-hidden="true" title="menu"><div class="lines"><span></span><span></span><span></span></div></div>
+
+      <!-- Burger button (3 lines) -->
+      <button class="burger" id="burgerBtn" aria-label="menu">
+        <div class="lines" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
     </header>
 
     <main class="card" role="main">
@@ -62,7 +163,7 @@
           <input id="pin" class="pin-input" type="text" inputmode="numeric">
         </div>
         <button id="openBtn" class="open-btn">Открыть</button>
-        <div class="hint" style="color: blue;">PIN-kod размещается рядом с QR-кодом документа</div>
+        <div class="hint">PIN-kod размещается рядом с QR-кодом документа</div>
         <div id="error" role="alert"></div>
       </div>
 
@@ -72,7 +173,7 @@
             <div class="doc-placeholder" id="docPlaceholder">
               <img src="assets/hujjat.jpg" alt="Document preview">
             </div>
-            <!-- No inline PDF viewer here — we will open the PDF in new tab -->
+            <!-- PDF will open in a new tab when PIN correct -->
           </div>
         </div>
       </div>
@@ -82,17 +183,23 @@
 <script>
 (function(){
   // ---------- CONFIG ----------
-  // Best: store PDF with site assets and use direct path
-  const PDF_URL = "/assets/document.pdf";   // <-- put document.pdf in assets/
-  // If you use external hosting, set public URL here:
-  // const PDF_URL = "https://your-bucket.s3.amazonaws.com/document.pdf";
-
-  const STORED_PIN = "9876"; // set actual PIN here
+  // Recommended: put the PDF into your site assets folder for same-origin serving:
+  const PDF_URL = "/assets/document.pdf";   // <-- ensure this file exists on the server
+  const STORED_PIN = "9876"; // set the actual PIN here
   // ---------- END CONFIG ----------
 
   const pinInput = document.getElementById('pin');
   const openBtn = document.getElementById('openBtn');
   const errorEl = document.getElementById('error');
+  const burgerBtn = document.getElementById('burgerBtn');
+
+  // demo handler for burger (replace with your menu code if needed)
+  burgerBtn.addEventListener('click', function(){
+    // simple non-blocking visual feedback instead of alert (better UX)
+    burgerBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.96)' }, { transform: 'scale(1)' }], { duration: 140 });
+    // you can open a side menu here — for demo, just log
+    console.log('Burger clicked — implement menu toggle here.');
+  });
 
   function reverseString(s){ return s.split('').reverse().join(''); }
 
@@ -104,20 +211,18 @@
       return;
     }
 
-    // accept normal OR reversed PIN
+    // accept both normal and reversed input for backward compatibility
     if (v === STORED_PIN || reverseString(v) === STORED_PIN) {
-      // Try open in new tab/window
       try {
         const newWin = window.open(PDF_URL, '_blank', 'noopener,noreferrer');
         if (!newWin) {
-          // Popup blocked -> open in same tab (fallback)
+          // popup blocked -> open in same tab
           window.location.href = PDF_URL;
         } else {
-          // For many browsers, you may want to focus
           newWin.focus && newWin.focus();
         }
       } catch (e) {
-        // Fallback if anything throws
+        // fallback
         window.location.href = PDF_URL;
       }
     } else {
@@ -125,9 +230,21 @@
     }
   });
 
-  // Allow Enter key
+  // Enter key support
   pinInput.addEventListener('keydown', function(e){
     if (e.key === 'Enter') openBtn.click();
+  });
+
+  // defensive: if logo image fails to load, keep layout stable
+  const logo = document.getElementById('siteLogo');
+  logo.addEventListener('error', function(){
+    // replace with a light placeholder svg (inline) to preserve layout & accessibility
+    logo.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46">' +
+      '<rect width="46" height="46" rx="8" fill="%23f0f0f0"/>' +
+      '<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="10" fill="%23999">LOGO</text>' +
+      '</svg>'
+    );
   });
 })();
 </script>
